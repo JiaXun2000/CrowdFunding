@@ -1,0 +1,26 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CrowdFunding
+    network: rinkeby
+    source:
+      address: "0x6b21D602dD8f409Ad8Ec707e9709CD37780aBAE9"
+      abi: CrowdFunding
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - CampaignBidLog
+        - CampaignLog
+      abis:
+        - name: CrowdFunding
+          file: ./abis/CrowdFunding.json
+      eventHandlers:
+        - event: CampaignBidLog(uint256,address,uint256)
+          handler: handleCampaignBidLog
+        - event: CampaignLog(uint256,address,uint256)
+          handler: handleCampaignLog
+      file: ./src/crowd-funding.ts
